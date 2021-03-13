@@ -2,7 +2,6 @@ package ui;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
@@ -14,7 +13,7 @@ public class Main {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));	
 	
-		
+	//while((br.readLine()!=null)) {	
 	String line = br.readLine();
 	String [] data = line.split(" ");
 	int [] valueData = new int[data.length];
@@ -34,37 +33,84 @@ public class Main {
 	
 	Arrays.sort(valuePrices);
 
-	
-	int i = 0;
-	int j= valuePrices.length-1;
-	int found = -1;
-	int [] options = new int[2];
-	
-	
-	while(found<0 && i<=j) {
-	
-		int m=(j+i)/2;
+		int [] positions = findDifference(valuePrices, money);
 		
-		if((valuePrices[i]+valuePrices[j])==money){
 		
-			options[0] = valuePrices[i];
-			options[1] = valuePrices[j];
-			found = 1;
+	
+	
 			
-			}else if(valuePrices[j]+valuePrices[m]>=money) {
+		bw.write("Peter should buy books whose prices are " + positions[0] +" and " + positions[1] + ".\n");
+		br.readLine();
+		
+		br.close();
+		bw.close();
+		//}
+	}
+	public static int  binarySearch(int [] prices, int money) {
+		
+		
+		int i= 0;
+		
+		int j = prices.length-1;
+		
+		int found = -1;
+		
+		int m = 0;
+		
+		while(found<0 && i<=j) {
+		
+			m = (i+j)/2;
+			
+			if(prices[m]==money) {
+			
+				found = m;
+				
+		
+			}else if(prices[m]>money) {
 				
 				j= m-1;
 				
-			}else if(valuePrices[i]+valuePrices[m]<money) {
-		
-				i = m+1;	
+			}else if(prices[m]<money) {
 				
+				i=m+1;
+				
+			}
+		}
+		return found;
+	}
+	public static int [] findDifference(int [] prices, int money) {
+		
+		int diff = 0;
+		
+		int temporaryDiff = Integer.MAX_VALUE;
+		
+		int [] positions = new int[2];
+		
+		for(int i=0; i < prices.length;i++) {
+		
+			
+			
+		if(binarySearch(prices,(money-prices[i]))>=0) {
+			
+			if(prices[i]-prices[binarySearch(prices,(money-prices[i]))]<Integer.MAX_VALUE) {
+			
+				diff = Math.abs(prices[i]-prices[binarySearch(prices,(money-prices[i]))]);
+								
+				if((temporaryDiff)>(diff)) {
+				
+				temporaryDiff = diff;
+			
+					
+				positions[0] = prices[i];
+				positions[1] = prices[binarySearch(prices,(money-prices[i]))];
+				}
 			}
 			
 		}
-		bw.write("Peter should buy books whose prices are " + options[0] +" and " + options[1] + "\n");
-		br.close();
-		bw.close();
+			
+		}
+		
+		return positions; 
 	}
 	
 	
