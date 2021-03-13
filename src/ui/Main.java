@@ -12,39 +12,51 @@ public class Main {
 		
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));	
+	int [] positions = new int[2];
+	int money = 0;
+	int [] valueData;
+	int [] valuePrices;
+	String result = "\n";
 	
-	//while((br.readLine()!=null)) {	
-	String line = br.readLine();
-	String [] data = line.split(" ");
-	int [] valueData = new int[data.length];
+	String line = ""; 
+			
+	while((line=br.readLine())!=null) {
+	
+	/*String line25 = br.readLine();	
+	String [] data = line25.split(" ");
+	valueData = new int[data.length];
+	System.out.println(data + "esto da el error");
 	for(int i=0; i < data.length;i++ ) {
 		valueData[i] = Integer.parseInt(data[i]);
-		
+		System.out.println(valueData[i]);
 	}
+	*/
 	String line2 = br.readLine();
 	String [] prices = line2.split(" ");
-	int [] valuePrices = new int[prices.length];
+	valuePrices = new int[prices.length];
 	for(int i=0; i < prices.length;i++) {
-		valuePrices[i] = Integer.parseInt(prices[i]);
+
 		
 	}	
 	String line3 = br.readLine();
-	int money = Integer.parseInt(line3);
+	money = Integer.parseInt(line3);
+	
+	line = br.readLine();
 	
 	Arrays.sort(valuePrices);
-
-		int [] positions = findDifference(valuePrices, money);
+	
+	positions = findDifference(valuePrices, money);
 		
-		
+	result+= "Peter should buy books whose prices are " + positions[0] + " and " + positions[1] + "\n";	
 	
 	
-			
-		bw.write("Peter should buy books whose prices are " + positions[0] +" and " + positions[1] + ".\n");
-		br.readLine();
+	
+	}		
+		bw.write(result+"\n");
 		
 		br.close();
 		bw.close();
-		//}
+		
 	}
 	public static int  binarySearch(int [] prices, int money) {
 		
