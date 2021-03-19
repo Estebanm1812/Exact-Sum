@@ -14,32 +14,23 @@ public class Main {
 	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));	
 	int [] positions = new int[2];
 	int money = 0;
-	int [] valueData;
+	int valueData;
 	int [] valuePrices;
-	String result = "\n";
+	String result = "";
 	
 	String line = ""; 
 			
 	while((line=br.readLine())!=null) {
 	
-	/*String line25 = br.readLine();	
-	String [] data = line25.split(" ");
-	valueData = new int[data.length];
-	System.out.println(data + "esto da el error");
-	for(int i=0; i < data.length;i++ ) {
-		valueData[i] = Integer.parseInt(data[i]);
-		System.out.println(valueData[i]);
-	}
-	*/
+	valueData = booksAmount(line); 
+	
 	String line2 = br.readLine();
-	String [] prices = line2.split(" ");
-	valuePrices = new int[prices.length];
-	for(int i=0; i < prices.length;i++) {
-
-		
-	}	
+	
+	valuePrices = booksPrices(line2);
+	
 	String line3 = br.readLine();
-	money = Integer.parseInt(line3);
+	
+	money = calculateMoney(line3);
 	
 	line = br.readLine();
 	
@@ -47,12 +38,12 @@ public class Main {
 	
 	positions = findDifference(valuePrices, money);
 		
-	result+= "Peter should buy books whose prices are " + positions[0] + " and " + positions[1] + "\n";	
+	result+= "Peter should buy books whose prices are " + positions[0] + " and " + positions[1]+ "."+"\n"+"\n";	
 	
-	
+
 	
 	}		
-		bw.write(result+"\n");
+		bw.write(result);
 		
 		br.close();
 		bw.close();
@@ -124,7 +115,31 @@ public class Main {
 		
 		return positions; 
 	}
+	public static int booksAmount(String line) {
+		
+		int quantity = Integer.parseInt(line);
+		
+		return quantity;
+	}
+	public static int [] booksPrices(String line2) {
 	
+	int [] prices;
 	
-
+	String [] noNumericPrices = line2.split(" ");
+	
+	prices = new int[noNumericPrices.length];
+	
+	for(int i=0; i < noNumericPrices.length;i++) {
+	
+		prices[i] = Integer.parseInt(noNumericPrices[i]);
+		
+	}	
+	return prices;
+	}
+	public static int calculateMoney(String line3) {
+		
+		int money = Integer.parseInt(line3);
+		
+		return money;
+	}
 }
